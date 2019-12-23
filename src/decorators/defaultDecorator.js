@@ -15,7 +15,7 @@ import Link from '../components/Link';
 
 export const decorator = new CompositeDecorator([
   {
-    strategy: createTypeStrategy(Entity.LINK),
+    strategy: createTypeStrategy(Entity.LINK.style),
     component: Link
   }
 ]);
