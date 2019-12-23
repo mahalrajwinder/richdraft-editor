@@ -1,9 +1,53 @@
 /**
  * Copyright (c) 2019 Rajwinder Singh
- * Released under the MIT license
+ * Licensed under the MIT license
  *
  * -----------------------------------------------------------------------------
  * File: index.css
  * Author: Rajwinder Singh
  * -----------------------------------------------------------------------------
- */
+/*/
+
+*,
+*::before,
+*::after,
+*:before,
+*:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Helvetica Neue", "Roboto", sans-serif;
+  font-size: 16px;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: Menlo, Monaco, monospace;
+}
+
+.RichDraftEditor-root {
+  border: 1px solid #ddd;
+  max-width: 999px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 35px;
+  padding: 15px;
+}
+
+.RichDraftEditor-editor {
+  min-height: 400px;
+}
+
+.RichDraftEditor-editor .public-DraftEditorPlaceholder-root,
+ .RichDraftEditor-editor .public-DraftEditor-content {
+  padding: 15px;
+}
+
+.RichDraftEditor-editor-hidePlaceholder .public-DraftEditorPlaceholder-root {
+  display: none;
+}

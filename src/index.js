@@ -1,6 +1,6 @@
 //
 // Copyright (c) 2019 Rajwinder Singh
-// Released under the MIT license
+// Licensed under the MIT license
 //
 // -----------------------------------------------------------------------------
 // File: index.js
@@ -9,10 +9,11 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'draft-js/dist/Draft.css';
 import './index.css';
 import RichDraftEditor from './components/RichDraftEditor';
 
 ReactDOM.render(
-    <RichDraftEditor />,
-    document.getElementById('root')
+  <RichDraftEditor />,
+  document.getElementById('root')
 );
