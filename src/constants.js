@@ -91,7 +91,10 @@ export const Entity = {
 export const ClassName = {
   EDITOR: 'RichDraftEditor-editor',
   HIDE_PLACEHOLDER: 'RichDraftEditor-editor-hidePlaceholder',
-  ROOT: 'RichDraftEditor-root'
+  ROOT: 'RichDraftEditor-root',
+  TOOLBAR: 'RichDraftEditor-toolbar',
+  TOOLBAR_ITEM: 'RichDraftEditor-toolbarItem',
+  TOOLBAR_ITEM_ACTIVE: 'RichDraftEditor-toolbarItem-active'
 };
 
 
