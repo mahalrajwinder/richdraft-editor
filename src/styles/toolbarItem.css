@@ -1,0 +1,40 @@
+/**
+ * Copyright (c) 2019 Rajwinder Singh
+ * Licensed under the MIT license
+ *
+ * -----------------------------------------------------------------------------
+ * File: toolbarItem.css
+ * Author: Rajwinder Singh
+ * -----------------------------------------------------------------------------
+/*/
+
+.RichDraftEditor-toolbarItem {
+  position: relative;
+  display: inline-block;
+  color: #888;
+  cursor: pointer;
+  fill: #888;
+  height: 100%;
+  padding: 0.375em;
+}
+
+.RichDraftEditor-toolbarItem:hover,
+.RichDraftEditor-toolbarItem:focus {
+  background: #f5f5f5;
+}
+
+.RichDraftEditor-toolbarItem svg {
+  display: inline-block;
+  height: 1.5em;
+  width: 1.5em;
+}
+
+.RichDraftEditor-toolbarItem-active {
+  color: #5890ff;
+  fill: #5890ff;
+}
+
+.RichDraftEditor-toolbarItem-active:hover,
+.RichDraftEditor-toolbarItem-active:focus {
+  background: #f5f5f5;
+}

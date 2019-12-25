@@ -20,15 +20,22 @@ import {
   PLACEHOLDER
 } from '../constants';
 
+import Toolbar from './Toolbar';
+
 import { editorStateFromJSON } from '../utils/index';
+import blockStyleFn from '../utils/blockStyleFn';
+import customStyleMap from '../utils/customStyleMap';
 import keyBindingFn from '../utils/keyBindingFn';
 
 
 class RichDraftEditor extends React.Component {
   static defaultProps = {
+    blockStyleFn,
+    customStyleMap,
     keyBindingFn,
     placeholder: PLACEHOLDER,
     readOnly: false,
+    showToolbar: true,
     spellCheck: true
   };
 
@@ -43,7 +50,15 @@ class RichDraftEditor extends React.Component {
     this.onChange = (editorState) => { this.setState({editorState}); }
 
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
+    this.toggleBlockType = this.toggleBlockType.bind(this);
+    this.toggleInlineStyle = this.toggleInlineStyle.bind(this);
+    this.triggerEntity = this.triggerEntity.bind(this);
   } // RichDraftEditor::constructor
+
+
+  componentDidMount() {
+    this.focus();
+  }
 
 
   handleKeyCommand(command, editorState) {
@@ -56,10 +71,32 @@ class RichDraftEditor extends React.Component {
   }
 
 
+  toggleBlockType(editorState, blockType) {
+    this.onChange(
+      RichUtils.toggleBlockType(editorState, blockType)
+    );
+  }
+
+
+  toggleInlineStyle(editorState, inlineStyle) {
+    this.onChange(
+      RichUtils.toggleInlineStyle(this.state.editorState, inlineStyle)
+    );
+  }
+
+
+  triggerEntity(editorState, type) {
+    // TODO: Implement this method
+    console.log(type);
+  }
+
+
   renderEditor(editorState) {
     return (
       <div className={ClassName.EDITOR} onClick={this.focus}>
         <Editor
+          blockStyleFn={this.props.blockStyleFn}
+          customStyleMap={this.props.customStyleMap}
           editorState={editorState}
           handleKeyCommand={this.handleKeyCommand}
           keyBindingFn={this.props.keyBindingFn}
@@ -74,11 +111,26 @@ class RichDraftEditor extends React.Component {
   }
 
 
+  renderToolbar(editorState) {
+    if (!this.props.showToolbar) return null;
+
+    return (
+      <Toolbar
+        editorState={editorState}
+        toggleBlockType={this.toggleBlockType}
+        toggleInlineStyle={this.toggleInlineStyle}
+        triggerEntity={this.triggerEntity}
+      />
+    );
+  }
+
+
   render() {
     const { editorState } = this.state;
 
     return (
       <div className={ClassName.ROOT}>
+        {this.renderToolbar(editorState)}
         {this.renderEditor(editorState)}
       </div>
     );

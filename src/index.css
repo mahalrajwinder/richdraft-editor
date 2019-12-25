@@ -26,8 +26,19 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
+.blockquote {
+  border-left: 5px solid #eee;
+  color: #666;
+  font-style: italic;
+  margin: 16px 0;
+  padding: 10px 20px;
+
+}
+
+.code {
+  background: rgba(0, 0, 0, 0.05);
   font-family: Menlo, Monaco, monospace;
+  padding: 20px;
 }
 
 .RichDraftEditor-root {

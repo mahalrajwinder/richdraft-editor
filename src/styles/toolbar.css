@@ -1,0 +1,17 @@
+/**
+ * Copyright (c) 2019 Rajwinder Singh
+ * Licensed under the MIT license
+ *
+ * -----------------------------------------------------------------------------
+ * File: toolbar.css
+ * Author: Rajwinder Singh
+ * -----------------------------------------------------------------------------
+/*/
+
+.RichDraftEditor-toolbar {
+  border-bottom: 1px solid #ddd;
+  font-size: 16px;
+  height: calc(2.25em + 0.9375em + 1px);
+  padding-bottom: 0.9375em;
+  user-select: none;
+}
