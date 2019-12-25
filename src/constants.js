@@ -12,27 +12,27 @@ import icons from './icons';
 
 export const BLOCK_TYPES = [
   {
-    label: 'H1',
+    label: 'Heading 1',
     style: 'header-one',
     icon: icons.HeaderOneIcon
   },
   {
-    label: 'H2',
+    label: 'Heading 2',
     style: 'header-two',
     icon: icons.HeaderTwoIcon
   },
   {
-    label: 'H3',
+    label: 'Heading 3',
     style: 'header-three',
     icon: icons.HeaderThreeIcon
   },
   {
-    label: 'UL',
+    label: 'Unordered List',
     style: 'unordered-list-item',
     icon: icons.ULIcon
   },
   {
-    label: 'OL',
+    label: 'Ordered List',
     style: 'ordered-list-item',
     icon: icons.OLIcon
   },
@@ -51,27 +51,27 @@ export const BLOCK_TYPES = [
 
 export const INLINE_STYLES = [
   {
-    label: 'B',
+    label: 'Bold',
     style: 'BOLD',
     icon: icons.BoldIcon
   },
   {
-    label: 'I',
+    label: 'Italic',
     style: 'ITALIC',
     icon: icons.ItalicIcon
   },
   {
-    label: 'U',
+    label: 'Underline',
     style: 'UNDERLINE',
     icon: icons.UnderlineIcon
   },
   {
-    label: 'H',
+    label: 'Highlight',
     style: 'HIGHLIGHT',
     icon: icons.HighlightIcon
   },
   {
-    label: 'S',
+    label: 'StrikeThrough',
     style: 'STRIKETHROUGH',
     icon: icons.StrikeThroughIcon
   }
