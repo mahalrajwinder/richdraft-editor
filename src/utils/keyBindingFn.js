@@ -3,7 +3,7 @@
 // Licensed under the MIT license
 //
 // -----------------------------------------------------------------------------
-// File: getKeyBinding.js
+// File: keyBindingFn.js
 // Author: Rajwinder Singh
 // -----------------------------------------------------------------------------
 
@@ -11,5 +11,11 @@ import { getDefaultKeyBinding } from 'draft-js';
 
 
 export default (e) => {
-  return getDefaultKeyBinding(e);
+  switch (e.keyCode) {
+    case 9:
+      // TAB
+      return 'tab';
+    default:
+      return getDefaultKeyBinding(e);
+  }
 }
