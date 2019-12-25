@@ -3,7 +3,7 @@
 // Licensed under the MIT license
 //
 // -----------------------------------------------------------------------------
-// File: keyBindingFn.js
+// File: getKeyBinding.js
 // Author: Rajwinder Singh
 // -----------------------------------------------------------------------------
 
