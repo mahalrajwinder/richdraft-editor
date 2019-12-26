@@ -14,7 +14,9 @@ export default (e) => {
   switch (e.keyCode) {
     case 9:
       // TAB
+      if (e.shiftKey) return 'shift+tab';
       return 'tab';
+    
     default:
       return getDefaultKeyBinding(e);
   }

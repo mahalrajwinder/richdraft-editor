@@ -26,6 +26,7 @@ import { editorStateFromJSON } from '../utils/index';
 import blockStyleFn from '../utils/blockStyleFn';
 import customStyleMap from '../utils/customStyleMap';
 import keyBindingFn from '../utils/keyBindingFn';
+import KeyCommandUtils from '../utils/keyCommandUtils';
 
 
 class RichDraftEditor extends React.Component {
@@ -47,9 +48,13 @@ class RichDraftEditor extends React.Component {
     };
 
     this.focus = () => this.refs.editor.focus();
-    this.onChange = (editorState) => { this.setState({editorState}); }
+    this.onChange = (editorState) => {
+      this.setState({editorState});
+    }
 
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
+    this.handlePastedText = this.handlePastedText.bind(this);
+    this.handleReturn = this.handleReturn.bind(this);
     this.toggleBlockType = this.toggleBlockType.bind(this);
     this.toggleInlineStyle = this.toggleInlineStyle.bind(this);
     this.triggerEntity = this.triggerEntity.bind(this);
@@ -62,11 +67,30 @@ class RichDraftEditor extends React.Component {
 
 
   handleKeyCommand(command, editorState) {
-    const newState = RichUtils.handleKeyCommand(editorState, command);
+    let newState;
+
+    if (command === 'tab') {
+      newState = KeyCommandUtils.onTab(editorState);
+    } else if (command === 'shift+tab') {
+      newState = KeyCommandUtils.onTab(editorState, true);
+    } else {
+      newState = RichUtils.handleKeyCommand(editorState, command);
+    }
+
     if (newState) {
       this.onChange(newState);
       return HANDLED;
     }
+    return NOT_HANDLED;
+  }
+
+
+  handlePastedText(text, html, editorState) {
+    return NOT_HANDLED;
+  }
+
+
+  handleReturn(e, editorState) {
     return NOT_HANDLED;
   }
 
@@ -99,6 +123,8 @@ class RichDraftEditor extends React.Component {
           customStyleMap={this.props.customStyleMap}
           editorState={editorState}
           handleKeyCommand={this.handleKeyCommand}
+          handlePastedText={this.handlePastedText}
+          handleReturn={this.handleReturn}
           keyBindingFn={this.props.keyBindingFn}
           onChange={this.onChange}
           placeholder={this.props.placeholder}

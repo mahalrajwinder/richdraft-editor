@@ -11,6 +11,9 @@
 export const customStyleMap = {
   HIGHLIGHT: {
     background: '#FBBC05'
+  },
+  STRIKETHROUGH: {
+    textDecoration: 'line-through'
   }
 };
 
