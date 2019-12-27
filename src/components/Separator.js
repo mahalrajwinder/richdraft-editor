@@ -15,7 +15,7 @@ import { ClassName } from '../constants';
 
 class Separator extends React.Component {
   render() {
-    const className = ClassName.TOOLBAR_ITEM + ' ' + ClassName.TOOLBAR_ITEM_SEPARATOT;
+    const className = ClassName.TOOLBAR_ITEM_SEPARATOR;
 
     return <span className={className}></span>;
   }
