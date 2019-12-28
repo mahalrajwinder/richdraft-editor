@@ -21,6 +21,7 @@
 body {
   font-family: "Helvetica Neue", "Roboto", sans-serif;
   font-size: 16px;
+  line-height: 1.7;
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -32,7 +33,6 @@ body {
   font-style: italic;
   margin: 16px 0;
   padding: 10px 20px;
-
 }
 
 .code {
