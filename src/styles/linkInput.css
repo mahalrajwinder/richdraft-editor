@@ -1,0 +1,36 @@
+/**
+ * Copyright (c) 2019 Rajwinder Singh
+ * Licensed under the MIT license
+ *
+ * -----------------------------------------------------------------------------
+ * File: linkInput.css
+ * Author: Rajwinder Singh
+ * -----------------------------------------------------------------------------
+/*/
+
+.RichDraftEditor-linkInput {
+  display: inline-block;
+  height: 41px;
+  background: #fff;
+  fill: #666;
+  border-radius: 24px;
+  padding: 1px 10px;
+  border: 1px solid #ddd;
+}
+
+.RichDraftEditor-linkInput input {
+  outline: none;
+  padding: 10px 5px;
+  font-size: 16px;
+  width: 205px;
+  background: #fff;
+  color: #666;
+  border: none;
+  border-radius: 24px;
+  vertical-align: top;
+}
+
+.RichDraftEditor-linkInput svg {
+  width: 38px;
+  height: 38px;
+}

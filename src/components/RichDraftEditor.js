@@ -13,6 +13,10 @@ import {
   RichUtils
 } from 'draft-js';
 
+import DEFAULT_ACTIONS from '../defaultActions';
+import DEFAULT_ENTITY_INPUTS from '../defaultEntityInputs';
+
+
 import {
   ClassName,
   HANDLED,
@@ -31,6 +35,8 @@ import KeyCommandUtils from '../utils/keyCommandUtils';
 
 class RichDraftEditor extends React.Component {
   static defaultProps = {
+    actions: DEFAULT_ACTIONS,
+    entityInputs: DEFAULT_ENTITY_INPUTS,
     blockStyleFn,
     customStyleMap,
     keyBindingFn,
@@ -49,15 +55,12 @@ class RichDraftEditor extends React.Component {
 
     this.focus = () => this.refs.editor.focus();
     this.onChange = (editorState) => {
-      this.setState({editorState});
+      this.setState({ editorState });
     }
 
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
     this.handlePastedText = this.handlePastedText.bind(this);
     this.handleReturn = this.handleReturn.bind(this);
-    this.toggleBlockType = this.toggleBlockType.bind(this);
-    this.toggleInlineStyle = this.toggleInlineStyle.bind(this);
-    this.triggerEntity = this.triggerEntity.bind(this);
   } // RichDraftEditor::constructor
 
 
@@ -95,26 +98,6 @@ class RichDraftEditor extends React.Component {
   }
 
 
-  toggleBlockType(editorState, blockType) {
-    this.onChange(
-      RichUtils.toggleBlockType(editorState, blockType)
-    );
-  }
-
-
-  toggleInlineStyle(editorState, inlineStyle) {
-    this.onChange(
-      RichUtils.toggleInlineStyle(this.state.editorState, inlineStyle)
-    );
-  }
-
-
-  triggerEntity(editorState, type) {
-    // TODO: Implement this method
-    console.log(type);
-  }
-
-
   renderEditor(editorState) {
     return (
       <div className={ClassName.EDITOR} onClick={this.focus}>
@@ -129,7 +112,7 @@ class RichDraftEditor extends React.Component {
           onChange={this.onChange}
           placeholder={this.props.placeholder}
           readOnly={this.props.readOnly}
-          ref="editor"
+          ref='editor'
           spellCheck={this.props.placeholder}
         />
       </div>
@@ -142,10 +125,11 @@ class RichDraftEditor extends React.Component {
 
     return (
       <Toolbar
+        actions={this.props.actions}
+        entityInputs={this.props.entityInputs}
+        editor={this.refs.editor}
         editorState={editorState}
-        toggleBlockType={this.toggleBlockType}
-        toggleInlineStyle={this.toggleInlineStyle}
-        triggerEntity={this.triggerEntity}
+        onChange={this.onChange}
       />
     );
   }

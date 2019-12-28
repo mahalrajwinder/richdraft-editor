@@ -38,3 +38,10 @@
 .RichDraftEditor-toolbarItem-active:focus {
   background: #f5f5f5;
 }
+
+.RichDraftEditor-toolbarItem-separator {
+  display: inline-block;
+  border-right: 1px solid #ddd;
+  height: 1.5em;
+  margin: 0 0.5em;
+}
