@@ -20,7 +20,8 @@ export const ClassName = {
   TOOLBAR_ITEM: 'RichDraftEditor-toolbarItem',
   TOOLBAR_ITEM_ACTIVE: 'RichDraftEditor-toolbarItem-active',
   TOOLBAR_ITEM_CONTAINER: 'RichDraftEditor-toolbarItem-container',
-  TOOLBAR_ITEM_SEPARATOR: 'RichDraftEditor-toolbarItem-separator'
+  TOOLBAR_ITEM_SEPARATOR: 'RichDraftEditor-toolbarItem-separator',
+  TOOLBAR_WRAPPER: 'RichDraftEditor-toolbarWrapper'
 };
 
 

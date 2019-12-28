@@ -46,7 +46,7 @@ body {
   max-width: 999px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 105px;
+  margin-top: 0px;
 }
 
 .RichDraftEditor-editor {
@@ -55,7 +55,7 @@ body {
 
 .RichDraftEditor-editor .public-DraftEditorPlaceholder-root,
  .RichDraftEditor-editor .public-DraftEditor-content {
-  padding: 0px;
+  padding: 15px;
 }
 
 .RichDraftEditor-editor-hidePlaceholder .public-DraftEditorPlaceholder-root {

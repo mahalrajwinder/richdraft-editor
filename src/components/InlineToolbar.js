@@ -17,8 +17,9 @@ class InlineToolbar extends React.Component {
     super(props);
 
     this.positionFn = () => {
-      // TODO: Check if editor has focus, only then find position, otherwise
-      // return {};
+      if (!this.props.editorState.getSelection().getHasFocus()) {
+        return null;
+      }
       const selectionReact = window
         .getSelection()
         .getRangeAt(0)
@@ -44,7 +45,9 @@ class InlineToolbar extends React.Component {
         onChange={this.props.onChange}
         getPositionFn={this.positionFn}
         shouldDisplayToolbarFn={
-          (editorState) => !editorState.getSelection().isCollapsed() ? true : false
+          (editorState) => !editorState.getSelection().isCollapsed()
+            && editorState.getSelection().getHasFocus()
+            ? true : false
         }
       />
       </div>

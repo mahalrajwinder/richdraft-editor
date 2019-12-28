@@ -26,13 +26,28 @@ import '../styles/toolbar.css';
 
 
 class Toolbar extends React.Component {
+  static defaultProps = {
+    getPositionFn: () => {
+      const rootEl = document.getElementsByClassName('RichDraftEditor-root')[0];
+      const top = rootEl.offsetTop;
+      return {top: 'calc('+top+'px + 2em)'};
+    },
+
+    getWrapperWidth: () => {
+      const rootEl = document.getElementsByClassName('RichDraftEditor-root')[0];
+      const width = rootEl.offsetWidth;
+      return {width: width+'px'};
+    }
+  };
+
   constructor(props) {
     super(props);
 
     this.state = {
       showToolbar: true,
       editingEntity: null, // Entity object from actions' array
-      position: {}
+      position: {},
+      wrapperWidth: {}
     };
 
     this.blur = () => this.setState({ editingEntity: null });
@@ -47,15 +62,22 @@ class Toolbar extends React.Component {
   componentDidMount() {
     if (this.props.getPositionFn) {
       setTimeout(() => {
-        this.setState({ position: this.props.getPositionFn() });
+        const pos = this.props.getPositionFn();
+        if (pos) {
+          this.setState({ position: pos });
+        }
       }, 0);
     }
-
     if (this.props.shouldDisplayToolbarFn
         && this.props.shouldDisplayToolbarFn(this.props.editorState)
-        !== this.state.showToolbar) {
+        !== this.state.showToolbar
+        && !this.state.editingEntity) {
       this.setState({ showToolbar: !this.state.showToolbar });
     }
+
+    setTimeout(() => {
+      this.setState({ wrapperWidth: this.props.getWrapperWidth() });
+    }, 0);
   }
 
 
@@ -63,16 +85,21 @@ class Toolbar extends React.Component {
     if (this.props.getPositionFn) {
       setTimeout(() => {
         const pos = this.props.getPositionFn();
-        if (pos.top !== this.state.position.top
-            || pos.left !== this.state.position.left) {
+        if (pos 
+            && JSON.stringify(pos) !== JSON.stringify(this.state.position)) {
           this.setState({ position: pos});
         }
+        // if (pos.top !== this.state.position.top
+        //     || pos.left !== this.state.position.left) {
+        //   this.setState({ position: pos});
+        // }
       }, 0);
     }
 
     if (this.props.shouldDisplayToolbarFn
         && this.props.shouldDisplayToolbarFn(this.props.editorState)
-        !== this.state.showToolbar) {
+        !== this.state.showToolbar
+        && !this.state.editingEntity) {
       this.setState({ showToolbar: !this.state.showToolbar });
     }
   }
@@ -234,16 +261,20 @@ class Toolbar extends React.Component {
     }
 
     return (
-      <div
-        style={this.state.position}
-        className={ClassName.TOOLBAR}
-        onBlur={this.blur}
-      >
-        {
-          this.state.editingEntity
-          ? this.renderEntityInput(this.state.editingEntity)
-          : this.renderToolbarItems()
-        }
+      <div className={ClassName.TOOLBAR_WRAPPER}>
+        <div className={ClassName.TOOLBAR_WRAPPER+'Inner'} style={this.state.wrapperWidth}>
+          <div
+            style={this.state.position}
+            className={ClassName.TOOLBAR}
+            onBlur={this.blur}
+          >
+            {
+              this.state.editingEntity
+              ? this.renderEntityInput(this.state.editingEntity)
+              : this.renderToolbarItems()
+            }
+          </div>
+        </div>
       </div>
     );
   }
