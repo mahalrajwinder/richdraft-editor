@@ -6,16 +6,17 @@
 // File: defaultDecorator.js
 // Author: Rajwinder Singh
 // -----------------------------------------------------------------------------
+//
+// This file defines a default decorator for the Link entity.
 
 import { CompositeDecorator } from 'draft-js';
 import { createTypeStrategy } from '../utils/index';
-import { Entity } from '../constants';
 import Link from '../components/Link';
 
 
 export const decorator = new CompositeDecorator([
   {
-    strategy: createTypeStrategy(Entity.LINK.style),
+    strategy: createTypeStrategy('LINK'),
     component: Link
   }
 ]);
