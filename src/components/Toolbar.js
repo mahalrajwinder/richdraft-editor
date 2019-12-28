@@ -26,17 +26,13 @@ import '../styles/toolbar.css';
 
 
 class Toolbar extends React.Component {
-  static defaultProps = {
-    getPositionFn: () => {},
-    shouldDisplayToolbarFn: () => true
-  };
-
   constructor(props) {
     super(props);
 
     this.state = {
-      showToolbar: this.props.shouldDisplayToolbarFn(),
+      showToolbar: true,
       editingEntity: null, // Entity object from actions' array
+      position: {}
     };
 
     this.blur = () => this.setState({ editingEntity: null });
@@ -49,10 +45,36 @@ class Toolbar extends React.Component {
 
 
   componentDidMount() {
+    if (this.props.getPositionFn) {
+      setTimeout(() => {
+        this.setState({ position: this.props.getPositionFn() });
+      }, 0);
+    }
+
+    if (this.props.shouldDisplayToolbarFn
+        && this.props.shouldDisplayToolbarFn(this.props.editorState)
+        !== this.state.showToolbar) {
+      this.setState({ showToolbar: !this.state.showToolbar });
+    }
   }
 
 
   componentDidUpdate() {
+    if (this.props.getPositionFn) {
+      setTimeout(() => {
+        const pos = this.props.getPositionFn();
+        if (pos.top !== this.state.position.top
+            || pos.left !== this.state.position.left) {
+          this.setState({ position: pos});
+        }
+      }, 0);
+    }
+
+    if (this.props.shouldDisplayToolbarFn
+        && this.props.shouldDisplayToolbarFn(this.props.editorState)
+        !== this.state.showToolbar) {
+      this.setState({ showToolbar: !this.state.showToolbar });
+    }
   }
 
 
@@ -210,8 +232,13 @@ class Toolbar extends React.Component {
     if (!this.state.showToolbar) {
       return null;
     }
+
     return (
-      <div className={ClassName.TOOLBAR} onBlur={this.blur}>
+      <div
+        style={this.state.position}
+        className={ClassName.TOOLBAR}
+        onBlur={this.blur}
+      >
         {
           this.state.editingEntity
           ? this.renderEntityInput(this.state.editingEntity)

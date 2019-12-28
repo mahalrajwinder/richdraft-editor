@@ -25,6 +25,7 @@ import {
 } from '../constants';
 
 import Toolbar from './Toolbar';
+import InlineToolbar from './InlineToolbar';
 
 import { editorStateFromJSON } from '../utils/index';
 import blockStyleFn from '../utils/blockStyleFn';
@@ -42,7 +43,8 @@ class RichDraftEditor extends React.Component {
     keyBindingFn,
     placeholder: PLACEHOLDER,
     readOnly: false,
-    showToolbar: true,
+    showToolbar: false,
+    showInlineToolbar: true,
     spellCheck: true
   };
 
@@ -135,11 +137,27 @@ class RichDraftEditor extends React.Component {
   }
 
 
+  renderInlineToolbar(editorState) {
+    if (!this.props.showInlineToolbar) return null;
+
+    return (
+      <InlineToolbar
+        actions={this.props.actions}
+        entityInputs={this.props.entityInputs}
+        editor={this.refs.editor}
+        editorState={editorState}
+        onChange={this.onChange}
+      />
+    );
+  }
+
+
   render() {
     const { editorState } = this.state;
 
     return (
       <div className={ClassName.ROOT}>
+        {this.renderInlineToolbar(editorState)}
         {this.renderToolbar(editorState)}
         {this.renderEditor(editorState)}
       </div>

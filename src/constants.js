@@ -15,6 +15,7 @@ export const ClassName = {
   HIDE_PLACEHOLDER: 'RichDraftEditor-editor-hidePlaceholder',
   ROOT: 'RichDraftEditor-root',
   LINK_INPUT: 'RichDraftEditor-linkInput',
+  INLINE_TOOLBAR: 'RichDraftEditor-inlineToolbar',
   TOOLBAR: 'RichDraftEditor-toolbar',
   TOOLBAR_ITEM: 'RichDraftEditor-toolbarItem',
   TOOLBAR_ITEM_ACTIVE: 'RichDraftEditor-toolbarItem-active',

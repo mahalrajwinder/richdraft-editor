@@ -20,7 +20,8 @@
 
 body {
   font-family: "Helvetica Neue", "Roboto", sans-serif;
-  font-size: 16px;
+  font-size: 20px;
+  color: #444;
   line-height: 1.7;
   margin: 0;
   -webkit-font-smoothing: antialiased;
@@ -42,12 +43,10 @@ body {
 }
 
 .RichDraftEditor-root {
-  border: 1px solid #ddd;
   max-width: 999px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 35px;
-  padding: 15px;
+  margin-top: 105px;
 }
 
 .RichDraftEditor-editor {
@@ -56,7 +55,7 @@ body {
 
 .RichDraftEditor-editor .public-DraftEditorPlaceholder-root,
  .RichDraftEditor-editor .public-DraftEditor-content {
-  padding: 15px;
+  padding: 0px;
 }
 
 .RichDraftEditor-editor-hidePlaceholder .public-DraftEditorPlaceholder-root {
