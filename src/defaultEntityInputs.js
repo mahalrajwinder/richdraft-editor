@@ -3,7 +3,7 @@
 // Licensed under the MIT license
 //
 // -----------------------------------------------------------------------------
-// File: defaultActions.js
+// File: defaultEntityInputs.js
 // Author: Rajwinder Singh
 // -----------------------------------------------------------------------------
 //
