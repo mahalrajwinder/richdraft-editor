@@ -13,7 +13,11 @@ import {
   RichUtils
 } from 'draft-js';
 
-import DEFAULT_ACTIONS from '../defaultActions';
+import {
+  DEFAULT_ACTIONS,
+  DEFAULT_INLINE_ACTIONS,
+  DEFAULT_BLOCK_ACTIONS
+  } from '../defaultActions';
 import DEFAULT_ENTITY_INPUTS from '../defaultEntityInputs';
 
 import {
@@ -25,6 +29,7 @@ import {
 
 import StaticToolbar from './StaticToolbar';
 import InlineToolbar from './InlineToolbar';
+import SideToolbar from './SideToolbar';
 
 import { editorStateFromJSON } from '../utils/index';
 import blockStyleFn from '../utils/blockStyleFn';
@@ -36,14 +41,17 @@ import KeyCommandUtils from '../utils/keyCommandUtils';
 class RichDraftEditor extends React.Component {
   static defaultProps = {
     actions: DEFAULT_ACTIONS,
+    sideToolbarActions: DEFAULT_BLOCK_ACTIONS,
+    inlineToolbarActions: DEFAULT_INLINE_ACTIONS,
     entityInputs: DEFAULT_ENTITY_INPUTS,
     blockStyleFn,
     customStyleMap,
     keyBindingFn,
     placeholder: PLACEHOLDER,
     readOnly: false,
-    showStaticToolbar: true,
-    showInlineToolbar: false,
+    showStaticToolbar: false,
+    showInlineToolbar: true,
+    showSideToolbar: true,
     spellCheck: true
   };
 
@@ -141,7 +149,22 @@ class RichDraftEditor extends React.Component {
 
     return (
       <InlineToolbar
-        actions={this.props.actions}
+        actions={this.props.inlineToolbarActions}
+        entityInputs={this.props.entityInputs}
+        editor={this.refs.editor}
+        editorState={editorState}
+        onChange={this.onChange}
+      />
+    );
+  }
+
+
+  renderSideToolbar(editorState) {
+    if (!this.props.showSideToolbar) return null;
+
+    return (
+      <SideToolbar
+        actions={this.props.sideToolbarActions}
         entityInputs={this.props.entityInputs}
         editor={this.refs.editor}
         editorState={editorState}
@@ -158,6 +181,7 @@ class RichDraftEditor extends React.Component {
       <div className={ClassName.ROOT}>
         {this.renderInlineToolbar(editorState)}
         {this.renderStaticToolbar(editorState)}
+        {this.renderSideToolbar(editorState)}
         {this.renderEditor(editorState)}
       </div>
     );
