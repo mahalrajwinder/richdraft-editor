@@ -10,27 +10,40 @@
 
 .RichDraftEditor-linkInput {
   display: inline-block;
-  height: 41px;
-  background: #fff;
-  fill: #666;
+  height: calc(2.25em + 2px);
   border-radius: 24px;
-  padding: 1px 10px;
+  padding: 0 .5em 0 0;
+  background: #fff;
+}
+
+.RichDraftEditor-staticToolbar .RichDraftEditor-linkInput {
   border: 1px solid #ddd;
 }
 
 .RichDraftEditor-linkInput input {
-  outline: none;
-  padding: 10px 5px;
-  font-size: 16px;
-  width: 205px;
+  padding: 0.5em 0.75em;
+  width: 14em;
+  font-size: 100%;
   background: #fff;
   color: #666;
+  outline: none;
   border: none;
   border-radius: 24px;
-  vertical-align: top;
+  vertical-align: middle;
+}
+
+.RichDraftEditor-inlineToolbar .RichDraftEditor-linkInput,
+.RichDraftEditor-inlineToolbar .RichDraftEditor-linkInput input {
+  background: #f5f5f5;
 }
 
 .RichDraftEditor-linkInput svg {
-  width: 38px;
-  height: 38px;
+  fill: #888;
+  width: 1.5em;
+  height: 1.5em;
+  vertical-align: middle;
+}
+
+.RichDraftEditor-linkInput svg:hover {
+  fill: #444;
 }
