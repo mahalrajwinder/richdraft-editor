@@ -67,9 +67,9 @@ class SideToolbar extends React.Component {
       `[data-offset-key='${offsetKey}']`
     )[0];
 
-    const rootEl = document.getElementsByClassName(ClassName.ROOT)[0];
-    const left = rootEl.offsetLeft - OFFSET_DELTA;
-    const top = node.offsetTop + rootEl.offsetTop;
+    const editorRoot = document.getElementsByClassName(ClassName.EDITOR)[0];
+    const left = editorRoot.offsetLeft - OFFSET_DELTA;
+    const top = node.offsetTop + editorRoot.offsetTop;
 
     return { top: top+'px', left: 'calc('+left+'px - 6.75em)' };
   }
