@@ -1,0 +1,22 @@
+/**
+ * Copyright (c) 2019 Rajwinder Singh
+ * Licensed under the MIT license
+ *
+ * -----------------------------------------------------------------------------
+ * File: toolbar.css
+ * Author: Rajwinder Singh
+ * -----------------------------------------------------------------------------
+/*/
+
+.RichDraftEditor-staticToolbar,
+.RichDraftEditor-staticToolbar .RichDraftEditor-toolbarWrapper {
+  height: 4.25em;
+  background: #fff;
+}
+
+.RichDraftEditor-staticToolbar .RichDraftEditor-toolbarWrapper {
+  padding: 1.5em 15px 0.5em 15px;
+  border-bottom: 1px solid #ddd;
+  position: fixed;
+  z-index: 9;
+}

@@ -1,0 +1,17 @@
+/**
+ * Copyright (c) 2019 Rajwinder Singh
+ * Licensed under the MIT license
+ *
+ * -----------------------------------------------------------------------------
+ * File: inlineToolbar.css
+ * Author: Rajwinder Singh
+ * -----------------------------------------------------------------------------
+/*/
+
+.RichDraftEditor-inlineToolbar {
+  position: fixed;
+  z-index: 9;
+  background: #f5f5f5;
+  border-radius: 5px;
+  box-shadow: 0px 1px 3px 0px rgba(220, 220, 220, 1);
+}

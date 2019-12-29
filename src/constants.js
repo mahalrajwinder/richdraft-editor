@@ -16,6 +16,7 @@ export const ClassName = {
   ROOT: 'RichDraftEditor-root',
   LINK_INPUT: 'RichDraftEditor-linkInput',
   INLINE_TOOLBAR: 'RichDraftEditor-inlineToolbar',
+  STATIC_TOOLBAR: 'RichDraftEditor-staticToolbar',
   TOOLBAR: 'RichDraftEditor-toolbar',
   TOOLBAR_ITEM: 'RichDraftEditor-toolbarItem',
   TOOLBAR_ITEM_ACTIVE: 'RichDraftEditor-toolbarItem-active',
@@ -25,6 +26,7 @@ export const ClassName = {
 };
 
 
+export const OFFSET_DELTA = 15;
 export const MAX_LIST_DEPTH = 3;
 export const HANDLED = 'handled';
 export const NOT_HANDLED = 'not_handled';
