@@ -13,8 +13,9 @@
   color: #888;
   cursor: pointer;
   fill: #888;
-  height: 100%;
+  height: 2.25em;
   padding: 0.375em;
+  vertical-align: middle;
 }
 
 .RichDraftEditor-toolbarItem:hover,
@@ -43,4 +44,5 @@
   border-right: 1px solid #ddd;
   height: 1.5em;
   margin: 0 0.5em;
+  vertical-align: middle;
 }

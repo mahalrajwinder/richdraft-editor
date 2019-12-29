@@ -16,7 +16,6 @@ import {
 import DEFAULT_ACTIONS from '../defaultActions';
 import DEFAULT_ENTITY_INPUTS from '../defaultEntityInputs';
 
-
 import {
   ClassName,
   HANDLED,
@@ -24,7 +23,7 @@ import {
   PLACEHOLDER
 } from '../constants';
 
-import Toolbar from './Toolbar';
+import StaticToolbar from './StaticToolbar';
 import InlineToolbar from './InlineToolbar';
 
 import { editorStateFromJSON } from '../utils/index';
@@ -43,8 +42,8 @@ class RichDraftEditor extends React.Component {
     keyBindingFn,
     placeholder: PLACEHOLDER,
     readOnly: false,
-    showToolbar: false,
-    showInlineToolbar: true,
+    showStaticToolbar: true,
+    showInlineToolbar: false,
     spellCheck: true
   };
 
@@ -122,11 +121,11 @@ class RichDraftEditor extends React.Component {
   }
 
 
-  renderToolbar(editorState) {
-    if (!this.props.showToolbar) return null;
+  renderStaticToolbar(editorState) {
+    if (!this.props.showStaticToolbar) return null;
 
     return (
-      <Toolbar
+      <StaticToolbar
         actions={this.props.actions}
         entityInputs={this.props.entityInputs}
         editor={this.refs.editor}
@@ -158,7 +157,7 @@ class RichDraftEditor extends React.Component {
     return (
       <div className={ClassName.ROOT}>
         {this.renderInlineToolbar(editorState)}
-        {this.renderToolbar(editorState)}
+        {this.renderStaticToolbar(editorState)}
         {this.renderEditor(editorState)}
       </div>
     );

@@ -47,3 +47,22 @@ export function createTypeStrategy(type) {
     );
   };
 }
+
+
+export function isEquivalent(obj1, obj2) {
+  const props_obj1 = Object.keys(obj1);
+  const props_obj2 = Object.keys(obj2);
+
+  if (props_obj1.length !== props_obj2.length) {
+    return false;
+  }
+
+  for (var i = 0; i < props_obj1.length; ++i) {
+    var propName = props_obj1[i];
+    if (obj1[propName] !== obj2[propName]) {
+      return false;
+    }
+  }
+
+  return true;
+}
