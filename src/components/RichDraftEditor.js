@@ -24,7 +24,8 @@ import {
   ClassName,
   HANDLED,
   NOT_HANDLED,
-  PLACEHOLDER
+  PLACEHOLDER,
+  PAIR_CHARACTERS,
 } from '../constants';
 
 import StaticToolbar from './StaticToolbar';
@@ -67,6 +68,7 @@ class RichDraftEditor extends React.Component {
       this.setState({ editorState });
     }
 
+    this.handleBeforeInput = this.handleBeforeInput.bind(this);
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
     this.handlePastedText = this.handlePastedText.bind(this);
     this.handleReturn = this.handleReturn.bind(this);
@@ -75,6 +77,18 @@ class RichDraftEditor extends React.Component {
 
   componentDidMount() {
     this.focus();
+  }
+
+
+  handleBeforeInput(char, editorState) {
+    if (PAIR_CHARACTERS[char]) {
+      const newState = KeyCommandUtils.handlePairCharInput(char, editorState);
+      if (newState) {
+        this.onChange(newState);
+        return HANDLED;
+      }
+    }
+    return NOT_HANDLED;
   }
 
 
@@ -128,6 +142,7 @@ class RichDraftEditor extends React.Component {
           blockStyleFn={this.props.blockStyleFn}
           customStyleMap={this.props.customStyleMap}
           editorState={editorState}
+          handleBeforeInput={this.handleBeforeInput}
           handleKeyCommand={this.handleKeyCommand}
           handlePastedText={this.handlePastedText}
           handleReturn={this.handleReturn}

@@ -22,9 +22,43 @@ import {
 } from './block';
 
 import {
+  PAIR_CHARACTERS,
   MAX_LIST_DEPTH,
   INDENT_SIZE,
   } from '../constants';
+
+
+export function handlePairCharInput(char, editorState) {
+  if (getCurrentBlockType(editorState) !== 'code-block') {
+    return null;
+  }
+  const selection = editorState.getSelection();
+  if (selection.isCollapsed() && (char === '"' || char === "'")) {
+    const anchorOffset = selection.getAnchorOffset();
+    const block = getCurrentBlock(editorState);
+    const lastChar = block.getText()[anchorOffset - 1];
+    if (lastChar === '"' || lastChar === "'") {
+      return null;
+    }
+  }
+
+  const withFirstChar = Modifier.replaceText(
+    editorState.getCurrentContent(),
+    selection,
+    char
+  );
+
+  const newState = EditorState.push(editorState, withFirstChar, 'insert-characters');
+  const withAdjustment = Modifier.replaceText(
+    newState.getCurrentContent(),
+    newState.getSelection(),
+    PAIR_CHARACTERS[char]
+  );
+
+  const modifiedState = EditorState.push(newState, withAdjustment, 'insert-characters');
+
+  return EditorState.forceSelection(modifiedState, newState.getSelection());
+}
 
 
 export function onBackspace(editorState) {
@@ -32,7 +66,9 @@ export function onBackspace(editorState) {
       || !editorState.getSelection().isCollapsed()) {
     return null;
   }
-
+  //
+  // TODO: handle deletion of Pair Characters
+  //
   return deleteIndent(editorState);
 }
 
@@ -90,6 +126,7 @@ export function onTab(editorState, isShiftKeyCommand = false) {
 
 
 const KeyCommandUtils = {
+  handlePairCharInput,
   onBackspace,
   onReturn,
   onTab,
