@@ -17,6 +17,10 @@ export default (e) => {
       if (e.shiftKey) return 'shift+tab';
       return 'tab';
     
+    case 8:
+      // Backspace
+      return 'backspace';
+    
     default:
       return getDefaultKeyBinding(e);
   }

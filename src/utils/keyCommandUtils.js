@@ -7,14 +7,65 @@
 // Author: Rajwinder Singh
 // -----------------------------------------------------------------------------
 
-import { EditorState } from 'draft-js';
+import {
+  EditorState,
+  RichUtils,
+  Modifier,
+  SelectionState,
+  } from 'draft-js';
+
 import {
   adjustBlockDepth,
+  getCurrentBlock,
   getCurrentBlockDepth,
-  getCurrentBlockType
+  getCurrentBlockType,
 } from './block';
 
-import { MAX_LIST_DEPTH } from '../constants';
+import {
+  MAX_LIST_DEPTH,
+  INDENT_SIZE,
+  } from '../constants';
+
+
+export function onBackspace(editorState) {
+  if (getCurrentBlockType(editorState) !== 'code-block'
+      || !editorState.getSelection().isCollapsed()) {
+    return null;
+  }
+
+  return deleteIndent(editorState);
+}
+
+
+export function onReturn(editorState, isShiftKeyCommand = false) {
+  if (getCurrentBlockType(editorState) !== 'code-block'
+      || isShiftKeyCommand) {
+    return null;
+  }
+
+  const selection = editorState.getSelection();
+  if (!selection.isCollapsed()) {
+    const withReplaced = Modifier.replaceText(
+      editorState.getCurrentContent(),
+      selection,
+      '\n'
+    );
+    return EditorState.push(editorState, withReplaced, 'insert-characters');
+  }
+
+  const newState = RichUtils.insertSoftNewline(editorState);
+  const text = getCurrentBlock(editorState).getText();
+  const endIndex = editorState.getSelection().getAnchorOffset(); // exclusive
+  const startIndex = getStartIndex(text, endIndex);
+  const indentSize = getIndentSize(text, startIndex, endIndex);
+  const withIndent = Modifier.replaceText(
+    newState.getCurrentContent(),
+    newState.getSelection(),
+    getIndentCharacters(indentSize)
+  );
+
+  return EditorState.push(newState, withIndent, 'insert-characters');
+}
 
 
 export function onTab(editorState, isShiftKeyCommand = false) {
@@ -30,7 +81,7 @@ export function onTab(editorState, isShiftKeyCommand = false) {
       return onTabList(editorState, isShiftKeyCommand);
 
     case 'code-block':
-      return editorState // TODO: Implement this;
+      return onTabCode(editorState, isShiftKeyCommand);
 
     default:
       return editorState;
@@ -39,7 +90,9 @@ export function onTab(editorState, isShiftKeyCommand = false) {
 
 
 const KeyCommandUtils = {
-  onTab
+  onBackspace,
+  onReturn,
+  onTab,
 }
 
 export default KeyCommandUtils;
@@ -67,34 +120,89 @@ function onTabList(editorState, isShiftKeyCommand) {
 }
 
 
-// function onTabCode(editorState, isShiftKeyCommand) {
-//   let map = getCurrentBlock(editorState).getData();
-//   if (map.has('tabIndex')) {
-//     let value = map.get('tabIndex') + isShiftKeyCommand ? -1 : 1;
-//     if (value < 0) {
-//       value = 0;
-//     }
-//     map.set('tabIndex', value);
-//   } else {
-//     map = new Map();
-//     map.set('tabIndex', isShiftKeyCommand ? 0 : 1);
-//   }
-//   console.log(map);
+function onTabCode(editorState, isShiftKeyCommand) {
+  const selection = editorState.getSelection();
+  if (!selection.isCollapsed()) {
+    return editorState;
+  }
 
-//   const withAdjustment = Modifier.setBlockData(
-//     editorState.getCurrentContent(),
-//     editorState.getSelection(),
-//     map
-//   );
+  if (isShiftKeyCommand) {
+    return deleteIndent(editorState);
+  }
 
-//   const newState = EditorState.push(editorState, withAdjustment, 'change-block-data');
+  const withIndent = Modifier.replaceText(
+    editorState.getCurrentContent(),
+    selection,
+    getIndentCharacters(INDENT_SIZE)
+  );
 
-//   const indentAdjustment = Modifier.replaceText(
-//     newState.getCurrentContent(),
-//     editorState.getSelection(),
-//     getIndentCharacters(map.get('tabIndex'))
-//   );
+  return EditorState.push(editorState, withIndent, 'insert-characters');
+}
 
-//   return EditorState.push(newState, indentAdjustment, 'insert-characters');
-// }
 
+function deleteIndent(editorState) {
+  const block = getCurrentBlock(editorState);
+  const text = block.getText();
+  const anchorOffset = editorState.getSelection().getAnchorOffset();
+  if (!hasIndent(text, anchorOffset)) {
+    return null;
+  }
+
+  const selectionState = SelectionState.createEmpty(block.getKey());
+  const updatedSelection = selectionState.merge({
+    focusOffset: anchorOffset,
+    anchorOffset: anchorOffset - INDENT_SIZE,
+  });
+
+  const withDeleted = Modifier.replaceText(
+    editorState.getCurrentContent(),
+    updatedSelection,
+    ''
+  );
+
+  const newState = EditorState.push(
+    editorState,
+    withDeleted,
+    'insert-characters'
+  );
+  return EditorState.forceSelection(newState, newState.getSelection());
+}
+
+
+function hasIndent(text, anchorOffset) {
+  let size = 0;
+  for (var i = anchorOffset - 1; i >= 0; --i) {
+    if (text[i] !== ' ' || size >= INDENT_SIZE) break;
+    ++size;
+  }
+  return size >= INDENT_SIZE;
+}
+
+
+function getStartIndex(text, endIndex) {
+  for (var i = endIndex - 1; i >= 0; --i) {
+    if (text[i] === '\n') {
+      return i+1;
+    }
+  }
+  return 0;
+}
+
+
+function getIndentSize(text, startIndex, endIndex) {
+  let size = 0;
+  for (var i = startIndex; i < endIndex; ++i) {
+    if (text[i] !== ' ') break;
+    ++size;
+  }
+  return size;
+}
+
+
+function getIndentCharacters(size) {
+  let indent = '';
+  for (var i = 0; i < size; ++i) {
+    indent += ' ';
+  }
+  return indent;
+}

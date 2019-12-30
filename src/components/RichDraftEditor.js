@@ -85,6 +85,8 @@ class RichDraftEditor extends React.Component {
       newState = KeyCommandUtils.onTab(editorState);
     } else if (command === 'shift+tab') {
       newState = KeyCommandUtils.onTab(editorState, true);
+    } else if (command === 'backspace') {
+      newState = KeyCommandUtils.onBackspace(editorState);
     } else {
       newState = RichUtils.handleKeyCommand(editorState, command);
     }
@@ -103,6 +105,18 @@ class RichDraftEditor extends React.Component {
 
 
   handleReturn(e, editorState) {
+    let newState;
+
+    if (e.shiftKey) {
+      newState = KeyCommandUtils.onReturn(editorState, true);
+    } else {
+      newState = KeyCommandUtils.onReturn(editorState);
+    }
+
+    if (newState) {
+      this.onChange(newState);
+      return HANDLED;
+    }
     return NOT_HANDLED;
   }
 

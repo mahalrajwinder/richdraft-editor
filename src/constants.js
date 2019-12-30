@@ -31,6 +31,7 @@ export const ClassName = {
 
 export const OFFSET_DELTA = 15;
 export const MAX_LIST_DEPTH = 3;
+export const INDENT_SIZE = 4;
 export const HANDLED = 'handled';
 export const NOT_HANDLED = 'not_handled';
 export const PLACEHOLDER = 'Tell a story';
